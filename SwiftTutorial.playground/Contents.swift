@@ -14,9 +14,12 @@ class TipCalculator {
     }
     
     func printPossibleTips() {
-        println("15%: \(calcTipWithTipPct(0.15))")
-        println("18%: \(calcTipWithTipPct(0.18))")
-        println("20%: \(calcTipWithTipPct(0.20))")
+        let possibleTipsInfered = [0.15, 0.18, 0.20]
+        let possibleTipsExplicit:[Double] = [0.15, 0.18, 0.20]
+
+        for possibleTip in possibleTipsExplicit {
+            println("\(possibleTip * 100)%: \(calcTipWithTipPct(possibleTip))")
+        }
     }
 }
 
