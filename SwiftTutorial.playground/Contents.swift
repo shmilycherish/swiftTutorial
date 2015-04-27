@@ -1,21 +1,26 @@
-let tutorialTeam = 60
-let editorialTeam = 17
-var totalTeam = tutorialTeam + editorialTeam
-
-
-totalTeam += 1
-
-let pirceInferred = 19.99
-let priceExplicit: Double = 19.99
-
-let onSaleInferred = true
-let onSaleExplicit: Bool = false
-
-let nameInferred = "Whoopie Cushion"
-let nameExplicit: String = "Whooipe Cushion"
-
-if onSaleInferred {
-    println("\(nameInferred) on sale for \(pirceInferred)!")
-} else {
-    println("\(priceExplicit) at regular price: \(priceExplicit)!")
+class TipCalculator {
+    let total: Double
+    let taxPct: Double
+    let subtotal: Double
+    
+    init(total: Double, taxPct: Double) {
+        self.total = total
+        self.taxPct = taxPct
+        subtotal = total / (taxPct + 1)
+    }
+    
+    func calcTipWithTipPct(tipPct: Double) -> Double {
+        return subtotal * tipPct
+    }
+    
+    func printPossibleTips() {
+        println("15%: \(calcTipWithTipPct(0.15))")
+        println("18%: \(calcTipWithTipPct(0.18))")
+        println("20%: \(calcTipWithTipPct(0.20))")
+    }
 }
+
+
+let tipCalc = TipCalculator(total: 33.25, taxPct: 0.06)
+tipCalc.printPossibleTips()
+
