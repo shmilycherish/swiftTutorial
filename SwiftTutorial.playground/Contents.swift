@@ -1,35 +1,97 @@
-
-let tipAndTotal: (Double, Double) = (4.00, 25.19)
-
-tipAndTotal.0
-tipAndTotal.1
-
-let (theTipAmt, thetotal) = tipAndTotal
-
-theTipAmt
-thetotal
-
-let tipAndTotalNamed = (tipAmt:4.00, total: 25.19)
-tipAndTotalNamed.tipAmt
-tipAndTotalNamed.total
-
-let tipandtotalNamed:(tipamt:Double, total:Double) = (4.00, 25.19)
-
-
-let total = 21.19
-let taxPct = 0.06
-let subtotal = total / (taxPct + 1)
-
-func calcTipwithTipPct(tipPct: Double) -> (tipAmt:Double, total:Double) {
-    let tipAmt = subtotal * tipPct
-    let finaltotal = total + tipAmt
-    return (tipAmt, finaltotal)
+import Foundation
+@objc protocol Speaker {
+    func Speak()
+    optional func TellJoke()
 }
 
-calcTipwithTipPct(0.2)
+
+
+@objc class Vicki: Speaker {
+    func Speak()
+    {
+        println("Hello, I am Vicki!")
+    }
+    func TellJoke() {
+        println("Q: What did Sushi A say to Sushi B?")
+    }
+    
+}
+
+@objc class Ray: Speaker {
+    func Speak() {
+        println("Yo, I am Ray!")
+    }
+    
+    func TellJoke() {
+        println("Q: Whats the object-oriented way to become wealthy?")
+    }
+    func WriteTutorial() {
+        println("I'm on it!")
+    }
+}
+
+class Animal {
+    
+}
+
+@objc class Dog: Animal, Speaker {
+    func Speak() {
+        println("woof!")
+    }
+}
+
+var speaker:Speaker
+speaker = Ray()
+speaker.Speak()
+(speaker as! Ray).WriteTutorial()
+speaker = Vicki()
+speaker.Speak()
+speaker.TellJoke?()
+
+speaker = Dog()
+speaker.TellJoke?()
 
 
 
+class DateSimulator {
+    let a:Speaker
+    let b:Speaker
+    var delegate: DateSimulatorDelegate?
+    
+    init(a:Speaker, b:Speaker) {
+        self.a = a
+        self.b = b
+    }
+    
+    func simulate() {
+        delegate?.dataSimulatorDidStart(self, a: a, b: b)
+        println("Off to dinner")
+        a.Speak()
+        b.Speak()
+        println("Walking back home")
+        a.TellJoke?()
+        b.TellJoke?()
+        delegate?.dataSimulatorDidEnd(self, a: a, b: b)
+    }
+}
 
+protocol DateSimulatorDelegate {
+    func dataSimulatorDidStart(sim:DateSimulator, a:Speaker, b:Speaker)
+    func dataSimulatorDidEnd(sim:DateSimulator, a:Speaker, b:Speaker)
+}
+
+class LoggingDateSimulator:DateSimulatorDelegate {
+    func dataSimulatorDidStart(sim: DateSimulator, a: Speaker, b: Speaker) {
+        println("Date started")
+    }
+    
+    func dataSimulatorDidEnd(sim: DateSimulator, a: Speaker, b: Speaker) {
+        println("date ended!")
+    }
+}
+
+let sim = DateSimulator(a:Vicki(), b:Ray())
+sim.delegate = LoggingDateSimulator()
+sim.simulate()
 
 
